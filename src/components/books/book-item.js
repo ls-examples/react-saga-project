@@ -18,7 +18,7 @@ class BookItem extends Component {
     const {id, title, author} = this.props.book
     return (
       <Col sm="6">
-        <Card body>
+        <Card body className="mt-2">
           <CardTitle><NavLink to={`/book/${id}`} activeStyle={{color: 'red'}}>{title}</NavLink></CardTitle>
           <CardText>
             {author}

@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {CardTitle, Col, CardText, Card, Button, Row, CardFooter, CardBody, CardHeader} from "reactstrap";
-import {books} from "../../fixtures";
+import {CardTitle, Col, CardText, Card, Button, CardFooter, CardBody, CardHeader} from "reactstrap";
 import {NavLink} from "react-router-dom";
 
 class BookCard extends Component {
@@ -43,7 +42,4 @@ class BookCard extends Component {
   }
 }
 
-export default () =>
-  <BookCard
-    book={books[0]}
-  />
+export default BookCard

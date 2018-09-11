@@ -3,9 +3,11 @@ import './App.css'
 import 'bootstrap/dist/css/bootstrap.css'
 import {Route, Switch, NavLink} from "react-router-dom"
 import BookList from "./components/books/book-list";
-import BookCard from "./components/books/book-card";
-import BookForm from "./components/books/book-form";
+import BookCardPage from "./pages/book-card-page";
 import {Row, Col, Button} from "reactstrap";
+import NotFound from "./components/common/not-found";
+import BookEditPage from "./pages/book-edit-page";
+import BookAddPage from "./pages/book-add-page";
 
 class App extends Component {
   render() {
@@ -27,9 +29,14 @@ class App extends Component {
         </Row>
         <Switch>
           <Route exact path='/' component={BookList}/>
-          <Route exact path='/book/create' component={BookForm}/>
-          <Route path='/book/edit/:id' component={BookForm}/>
-          <Route path='/book/:id' component={BookCard}/>
+          <Route exact path='/book/create' component={BookAddPage}/>
+          <Route path='/book/edit/:id' render={(props) => {
+              return <BookEditPage {...props} id={parseInt(props.match.params.id)}/>
+          }}/>
+          <Route path='/book/:id' render={(props) => {
+              return <BookCardPage {...props} id={parseInt(props.match.params.id)}/>
+          }}/>
+          <Route component={NotFound}/>
         </Switch>
       </div>
     )

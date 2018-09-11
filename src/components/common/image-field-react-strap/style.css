@@ -1,0 +1,14 @@
+.dropzone-preview {
+    position: relative;
+    height: 135px;
+    display: inline-block;
+}
+
+.dropzone-preview .delete-btn {
+    position: absolute;
+    right: 0;
+}
+
+.dropzone-preview img {
+    height: 100%;
+}
