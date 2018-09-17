@@ -20,6 +20,7 @@ function getBook({id}) {
 function getImage(url) {
   return fetch(url, {
     method: "GET",
+    cache: "no-cache",
     withCredentials: true
   })
     .then(res => res.blob())
@@ -66,6 +67,7 @@ async function handleResponse(res) {
   switch (res.status) {
     case 422:
     case 200:
+    case 201:
       let text = await res.text()
 
       try {

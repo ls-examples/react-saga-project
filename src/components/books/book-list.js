@@ -1,4 +1,4 @@
-import React, {Component, Fragment} from 'react'
+import React, {Component} from 'react'
 import PropTypes from 'prop-types'
 import BookItem from "./book-item"
 import {Row, Button} from "reactstrap"

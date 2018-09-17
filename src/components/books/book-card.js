@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {CardTitle, Col, CardText, Card, Button, CardFooter, CardBody, CardHeader} from "reactstrap";
+import {CardTitle, CardText, Card, Button, CardFooter, CardBody, CardHeader} from "reactstrap";
 import {NavLink} from "react-router-dom";
 
 class BookCard extends Component {
@@ -30,7 +30,7 @@ class BookCard extends Component {
             <div>Автор: {author}</div>
             <div>Год издания : {year}</div>
             <div>{description}</div>
-            {image ? <div><img height={300} src={image.url}/></div> : ''}
+            {image ? <div><img alt="" height={300} src={image.url}/></div> : ''}
           </CardText>
         </CardBody>
         <CardFooter>

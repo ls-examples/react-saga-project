@@ -1,4 +1,4 @@
-import {all, takeEvery, put, call, select, takeLatest} from 'redux-saga/effects'
+import {all, takeEvery, put, call} from 'redux-saga/effects'
 import {Record, OrderedMap} from 'immutable'
 import {createSelector} from 'reselect'
 import api, {ERRORS as apiErrors} from "../redux/api";

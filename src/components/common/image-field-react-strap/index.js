@@ -31,7 +31,7 @@ export class ImageDropzoneFieldReactStrap extends Component {
               </Alert>
               <div className="mt-2 ml-2 dropzone-preview">
                 {input.value ? <Button color="danger delete-btn" onClick={onDeleteHandle}>х</Button> : ''}
-                {input.value ? (<img src={input.value}/>) : ''}
+                {input.value ? (<img alt='' src={input.value}/>) : ''}
                 <Input
                   {...input}
                   type="hidden"

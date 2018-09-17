@@ -1,0 +1,9 @@
+.idea/
+node_modules/
+sessions/
+Dockerfile
+.dockerignore
+*.log
+Makefile
+build
+.env

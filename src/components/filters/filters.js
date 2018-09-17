@@ -4,9 +4,8 @@ import PropTypes from "prop-types";
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faSortAmountDown, faSortAmountUp} from '@fortawesome/free-solid-svg-icons'
 import {
-  bookListSelector, changeSort, clearStore, loadBooks,
-  loadedSelector,
-  loadingSelector, orderBySelector,
+  changeSort,
+  orderBySelector,
   orderDirectionSelector, searchBooks,
   searchSelector
 } from "../../ducks/books";
@@ -34,13 +33,13 @@ class Filters extends Component {
                    placeholder="Поиск"/>
           </FormGroup>
           <div>
-            <a href="#" onClick={this.handleSortTitle}>
+            <a href="" onClick={this.handleSortTitle}>
               Название
               {'title' === orderBy ?
                 <FontAwesomeIcon icon={orderDirection === 'desc' ? faSortAmountDown : faSortAmountUp}/> : ''}
             </a>
             {' '}
-            <a href="#" onClick={this.handleSortAuthor}>
+            <a href="" onClick={this.handleSortAuthor}>
               Автор
               {'author' === orderBy ?
                 <FontAwesomeIcon icon={orderDirection === 'desc' ? faSortAmountDown : faSortAmountUp}/> : ''}
