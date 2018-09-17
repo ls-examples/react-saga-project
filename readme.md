@@ -1,6 +1,6 @@
 
-[Демонтсрация](https://books.prod3.dsxack.com/)
-[Репозиторий API](http://books.prod3.dsxack.com/api)
+[Демонстрация](https://books.prod3.dsxack.com/)
+[Репозиторий API](https://gitlab.com/tt-books/books-backend)
 
 # Инструкция по развороту 
 1. yarn
