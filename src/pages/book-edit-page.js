@@ -21,10 +21,10 @@ class BookEditPage extends Component {
   }
 
   render() {
-    const {book, id, loading} = this.props
+    const {book, loading} = this.props
 
     if (!book) {
-      const message = 'Книга с id ' + id + ' не найдена';
+      const message = 'Книга не найдена';
       return <NotFound message={message}/>
     }
 

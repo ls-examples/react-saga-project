@@ -5,7 +5,13 @@ import {Row, Button} from "reactstrap"
 import Filters from "../filters/filters"
 import {connect} from 'react-redux'
 import Loader from '../common/loader'
-import {bookListSelector, loadBooks, loadedSelector, loadingSelector, searchBooks} from "../../ducks/books";
+import {
+  bookListSelector,
+  clearStore,
+  loadBooks,
+  loadedSelector,
+  loadingSelector,
+} from "../../ducks/books";
 
 class BookList extends Component {
   static propTypes = {
@@ -13,22 +19,22 @@ class BookList extends Component {
     loading: PropTypes.bool,
     loaded: PropTypes.bool,
     loadBooks: PropTypes.func,
+    clearStore: PropTypes.func,
     searchBooks: PropTypes.func,
   }
 
-  componentDidMount() {
-    const {loading, loaded, loadBooks, books} = this.props
-    if (!loading && !loaded && books.length === 0) {
-      loadBooks()
-    }
+  constructor(props) {
+    super(props)
+    const {clearStore, loadBooks} = this.props
+    clearStore()
+    loadBooks()
   }
 
   render() {
     const {loading} = this.props
-
     return (
       <div>
-        <Filters onSearch={this.props.searchBooks}/>
+        <Filters/>
         <div className="mb-2">
           {this.renderElements()}
         </div>
@@ -72,5 +78,5 @@ export default connect(
     loading: loadingSelector(state),
     loaded: loadedSelector(state)
   }),
-  {loadBooks, searchBooks}
+  {loadBooks, clearStore}
 )(BookList)

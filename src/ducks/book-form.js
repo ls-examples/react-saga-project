@@ -1,8 +1,9 @@
 import {all, takeEvery, put, call, select, takeLatest} from 'redux-saga/effects'
 import {Record, OrderedMap} from 'immutable'
 import {createSelector} from 'reselect'
-import {getBook, updateBookApi, addBookApi} from "../redux/api";
+import api from "../redux/api";
 import {setSubmitSucceeded, stopSubmit, startSubmit} from 'redux-form'
+import {getBase64} from "./utils";
 
 /**
  * Constants
@@ -80,7 +81,7 @@ export const loadedSelector = createSelector(
 export function loadBook(id) {
   return {
     type: LOAD_BOOK,
-    payload: {id}
+    payload: id
   }
 }
 
@@ -101,17 +102,19 @@ export function addBook(data) {
 export function* updateBookSaga({payload: {id, data}}) {
   yield put(startSubmit('book'))
   try {
-    const resp = yield call(updateBookApi, id, data)
+    const resp = yield call(api.updateBook, id, data)
     const {errors} = resp
     if (errors) {
-      yield put(stopSubmit('book', errors))
-    } else {
-      yield put(stopSubmit('book'))
-      yield put(setSubmitSucceeded('book'))
+      //yield put(stopSubmit('book', errors))
+      throw new Error(JSON.stringify(errors)) //решила не показывать ошибки от бекенда
     }
+
+    yield put(stopSubmit('book'))
+    yield put(setSubmitSucceeded('book'))
+
   } catch (e) {
     yield put(stopSubmit('book', {
-      _error:'К сожалению, не удалось выполнить сохранение книги. Попробуйте позже. '
+      _error: 'К сожалению, не удалось выполнить сохранение книги. Попробуйте позже. '
     }))
   }
 }
@@ -120,18 +123,19 @@ export function* addBookSaga({payload: {data}}) {
   yield put(startSubmit('book'))
 
   try {
-    const resp = yield call(addBookApi, data)
+    const resp = yield call(api.addBook, data)
     const {errors} = resp
     if (errors) {
-      yield put(stopSubmit('book', errors))
-    } else {
-      yield put(stopSubmit('book'))
-      yield put(setSubmitSucceeded('book'))
+      //yield put(stopSubmit('book', errors))
+      throw new Error(JSON.stringify(errors)) //решила не показывать ошибки от бекенда
     }
 
+    yield put(stopSubmit('book'))
+    yield put(setSubmitSucceeded('book'))
   } catch (e) {
+    console.log(e.message)
     yield put(stopSubmit('book', {
-      _error:'К сожалению, не удалось выполнить сохранение книги. Попробуйте позже. '
+      _error: 'К сожалению, не удалось выполнить сохранение книги. Попробуйте позже. '
     }))
   }
 }
@@ -143,10 +147,15 @@ export function* loadBookSaga({payload: id}) {
   })
 
   try {
-    const resp = yield call(getBook, {id})
+    const resp = yield call(api.getBook, {id})
+    const data = resp.data
+    if (resp.data.image) {
+      const imageBlob = yield call(api.getImage, resp.data.image.url)
+      data.image = yield call(getBase64, imageBlob)
+    }
     yield put({
       type: LOAD_BOOK_SUCCESS,
-      payload: resp
+      payload: data
     })
 
   } catch (e) {

@@ -11,16 +11,17 @@ class BookCard extends Component {
       title: PropTypes.string,
       author: PropTypes.string,
       year: PropTypes.year,
-      img: PropTypes.string,
+      image: PropTypes.shape({
+        url: PropTypes.string,
+        thumbnail: PropTypes.string
+      }),
       description: PropTypes.string,
-    })
+    }),
+    handleDeleteBook: PropTypes.func,
   }
 
   render() {
-    if (!this.props.book) {
-      return (<div>Not Found</div>)
-    }
-    const {id, title, author, year, description} = this.props.book
+    const {id, title, author, year, description, image} = this.props.book
     return (
       <Card body>
         <CardHeader><CardTitle>{title}</CardTitle></CardHeader>
@@ -29,13 +30,14 @@ class BookCard extends Component {
             <div>Автор: {author}</div>
             <div>Год издания : {year}</div>
             <div>{description}</div>
+            {image ? <div><img height={300} src={image.url}/></div> : ''}
           </CardText>
         </CardBody>
         <CardFooter>
           <NavLink to={`/book/edit/${id}`}>
             <Button color="primary">Редактировать</Button>
           </NavLink>
-          <Button className="ml-2" color="danger">Удалить</Button>
+          <Button className="ml-2" color="danger" onClick={this.props.handleDeleteBook}>Удалить</Button>
         </CardFooter>
       </Card>
     );

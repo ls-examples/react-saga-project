@@ -4,7 +4,6 @@ import PropTypes from "prop-types";
 import {Alert, Button} from "reactstrap";
 import FieldReactStrap from "../../common/input-field-react-strap";
 import {ImageDropzoneFieldReactStrap} from "../../common/image-field-react-strap";
-import {normalizeWithoutSpaces} from "../../../ducks/utils";
 import {getBase64} from "../../../ducks/utils";
 
 
@@ -34,8 +33,13 @@ class BookForm extends Component {
     }
   }
 
+  state = {
+    imageUploadError : '',
+  }
+
   render() {
     const {invalid, submitting, error, submitSucceeded} = this.props
+    const {imageUploadError} = this.state
     return (
       <div>
         <Alert isOpen={submitSucceeded && !submitting}>
@@ -47,9 +51,11 @@ class BookForm extends Component {
         <form onSubmit={this.props.handleSubmit}>
           <Field
             required={true}
-            normalize={normalizeWithoutSpaces}
+            // normalize={normalizeWithoutSpaces}
             maxLength={150} name="title" label="Название" component={FieldReactStrap}/>
-          <Field required={true} normalize={normalizeWithoutSpaces} maxLength={100} name="author" label="Автор"
+          <Field required={true}
+                 // normalize={normalizeWithoutSpaces}
+                 maxLength={100} name="author" label="Автор"
                  component={FieldReactStrap}/>
           <Field
             onKeyPress={this.handleKeyPressIntegerField}
@@ -57,9 +63,10 @@ class BookForm extends Component {
           <Field
             type="textarea"
             required={true}
-            normalize={normalizeWithoutSpaces}
+            // normalize={normalizeWithoutSpaces}
             maxLength={2000} name="description" label="Описание" component={FieldReactStrap}/>
-          <Field name="image" label="Изображение" onDropHandle={this.uploadImage} onDeleteHandle={this.onDeleteImage} component={ImageDropzoneFieldReactStrap} type="hidden" />
+
+          <Field name="image" imageUploadError={imageUploadError} label="Изображение" onDropHandle={this.uploadImage} onDeleteHandle={this.onDeleteImage} component={ImageDropzoneFieldReactStrap} type="hidden" />
           <div>
             <Button disabled={invalid || submitting}>Сохранить</Button>
           </div>
@@ -78,12 +85,19 @@ class BookForm extends Component {
   }
 
   uploadImage = (upload) => {
+    this.setState({...this.state, 'imageUploadError': ''})
     if (upload.length === 0) {
       return
     }
     const {change} = this.props
+    if (upload[0].size > 512*1024) {
+      this.setState({...this.state, 'imageUploadError': 'Изображение не должно превышать 512Kb'})
+      return
+    }
+
     getBase64(upload[0])
       .then((value) => {
+
         if (value) {
           change('image', value)
         }
@@ -98,7 +112,7 @@ class BookForm extends Component {
   }
 }
 
-function validate({title, author, year, description}) {
+function validate({title, author, year, description, image}) {
   const errors = {}
   if (!title) errors.title = 'Это обязательное поле'
 

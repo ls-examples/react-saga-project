@@ -1,58 +1,117 @@
-import {books} from "../fixtures"
-
-export function getBooks({limit, page, search}) {
-  return new Promise(resolve => {
-    setTimeout(() => {
-
-      resolve({
-        items: books[page],
-        has_more: page < (books.length - 1)
-      })
-    }, 2000)
-  })
-
-  return request('/books')
+export const ERRORS = {
+  NotFoundError: new Error("not found"),
+  UnknownError: new Error("unknown error"),
 }
 
-export function getBook({id}) {
-  return new Promise(resolve => {
-    setTimeout(() => {
-
-      resolve(books[0][0])
-    }, 0)
-  })
-
-  return request('/book/' + id)
+function getBooks({page = 1, search = '', orderBy = '', orderDirection = ''}) {
+  let data = {page, search}
+  if (orderBy) {
+    data["order_by"] = orderBy
+    data["order_direction"] = orderDirection
+  }
+  console.log("getBooks", data)
+  return requestGet('/book', data)
 }
 
-export function updateBookApi(id, data) {
-  console.log("updateBookApi", id, data)
-  return new Promise(resolve => {
-    setTimeout(() => {
-
-      resolve(books[0][0])
-    }, 2000)
-  })
-
-  return request('/book/edit/' + id)
+function getBook({id}) {
+  return requestGet('/book/' + id)
 }
 
-export function addBookApi(data) {
-  console.log("addBookApi", data)
-  return new Promise((resolve, reject)   => {
-    setTimeout(() => {
-      //reject({})
-     // resolve({})
-      resolve({errors: {
-        title: 'неверно заполнено поле название'
-        }})
-    }, 2000)
+function getImage(url) {
+  return fetch(url, {
+    method: "GET",
+    withCredentials: true
   })
-
-  return request('/book/create')
+    .then(res => res.blob())
 }
 
-function request(url, body) {
-  return fetch(url, {method: "POST", body})
-    .then(res => res.json())
+function updateBook(id, {author, description, title, year = "", image = ""}) {
+  return requestPost(`/book/${id}/update`, {
+    author,
+    description,
+    title,
+    year,
+    image
+  })
+}
+
+function deleteBook(id) {
+  return requestPost(`/book/${id}/delete`)
+}
+
+function addBook({author, description, title, year = "", image = ""}) {
+  return requestPost('/book/create', {
+    author,
+    description,
+    title,
+    year,
+    image
+  })
+}
+
+function request(url, method, params = {}) {
+  let { body, headers = {} } = params;
+
+  headers["accept"] = "application/json"
+
+  return fetch(url, {
+    body,
+    headers,
+    method,
+    withCredentials: true
+  })
+}
+
+async function handleResponse(res) {
+  switch (res.status) {
+    case 422:
+    case 200:
+      let text = await res.text()
+
+      try {
+        return JSON.parse(text)
+      } catch (e) {
+        return text;
+      }
+
+    case 404:
+      throw ERRORS.NotFoundError
+    default:
+      throw ERRORS.UnknownError
+  }
+}
+
+function buildUrl(url, queryParams) {
+  url = new URL(process.env.REACT_APP_API_URL + url)
+  if (queryParams) {
+    Object.keys(queryParams).forEach(key => url.searchParams.append(key, queryParams[key]))
+  }
+
+  return url;
+}
+
+function requestGet(url, queryParams = {}) {
+  url = buildUrl(url, queryParams)
+
+  return request(url, "GET").then(handleResponse)
+}
+
+function requestPost(url, body, queryParams = {}) {
+  url = buildUrl(url, queryParams)
+
+  return request(url, "POST", {
+    headers: {
+      "Content-Type": 'application/json',
+    },
+    body: JSON.stringify(body)
+  }).then(handleResponse)
+}
+
+export default {
+  addBook,
+  deleteBook,
+  updateBook,
+  getBook,
+  getImage,
+  getBooks
 }

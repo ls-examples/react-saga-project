@@ -1,11 +1,11 @@
 import React, {Component} from 'react'
-import {FormFeedback, FormGroup, Input, Col, Label, Button} from "reactstrap";
+import {FormFeedback, FormGroup, Input, Col, Label, Button, Alert} from "reactstrap";
 import Dropzone from "react-dropzone";
 import './style.css'
 
 export class ImageDropzoneFieldReactStrap extends Component {
   render() {
-    const {required, label, onDropHandle, onDeleteHandle, input, meta: {error}} = this.props
+    const {imageUploadError, required, label, onDropHandle, onDeleteHandle, input, meta: {error}} = this.props
     return (
       <FormGroup row className={required ? 'required' : ''}>
         <Label sm={2}>{label}</Label>
@@ -26,6 +26,9 @@ export class ImageDropzoneFieldReactStrap extends Component {
             accept='image/*'>
             <div>
               <div className="mt-2 ml-2">Загрузить изображение</div>
+              <Alert className="m-2" isOpen={!!imageUploadError} color="danger">
+                {imageUploadError}
+              </Alert>
               <div className="mt-2 ml-2 dropzone-preview">
                 {input.value ? <Button color="danger delete-btn" onClick={onDeleteHandle}>х</Button> : ''}
                 {input.value ? (<img src={input.value}/>) : ''}
@@ -36,7 +39,7 @@ export class ImageDropzoneFieldReactStrap extends Component {
               </div>
             </div>
           </Dropzone>
-          <FormFeedback>{error}</FormFeedback>
+          <FormFeedback>{error || imageUploadError}</FormFeedback>
         </Col>
       </FormGroup>
     )

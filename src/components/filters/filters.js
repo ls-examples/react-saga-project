@@ -1,32 +1,81 @@
 import React, {Component} from 'react'
-import { FormGroup, Form, Input } from "reactstrap";
+import {FormGroup, Form, Input} from "reactstrap";
 import PropTypes from "prop-types";
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faSortAmountDown, faSortAmountUp} from '@fortawesome/free-solid-svg-icons'
+import {
+  bookListSelector, changeSort, clearStore, loadBooks,
+  loadedSelector,
+  loadingSelector, orderBySelector,
+  orderDirectionSelector, searchBooks,
+  searchSelector
+} from "../../ducks/books";
+import {connect} from 'react-redux'
 
 class Filters extends Component {
   static propTypes = {
-    onSearch: PropTypes.func
+    onSearch: PropTypes.func,
+    search: PropTypes.string,
+    changeSort: PropTypes.func,
+    orderDirection: PropTypes.string,
+    orderBy: PropTypes.string,
   }
 
   render() {
+    const {search, orderBy, orderDirection} = this.props
     return (
       <div>
         <Form>
           <FormGroup>
             <Input type="text"
                    name="search"
+                   defaultValue={search}
                    onChange={this.handleSearch}
-                   placeholder="Поиск" />
+                   placeholder="Поиск"/>
           </FormGroup>
+          <div>
+            <a href="#" onClick={this.handleSortTitle}>
+              Название
+              {'title' === orderBy ?
+                <FontAwesomeIcon icon={orderDirection === 'desc' ? faSortAmountDown : faSortAmountUp}/> : ''}
+            </a>
+            {' '}
+            <a href="#" onClick={this.handleSortAuthor}>
+              Автор
+              {'author' === orderBy ?
+                <FontAwesomeIcon icon={orderDirection === 'desc' ? faSortAmountDown : faSortAmountUp}/> : ''}
+            </a>
+          </div>
         </Form>
       </div>
     )
   }
 
-  handleSearch = (e) => {
-    const { onSearch } = this.props
 
-    onSearch && onSearch(e.target.value)
+  handleSortTitle = (e) => {
+    e.preventDefault()
+    const {orderDirection, changeSort} = this.props
+    changeSort('title', orderDirection === 'desc' ? 'asc' : 'desc')
+  }
+
+  handleSortAuthor = (e) => {
+    e.preventDefault()
+    const {orderDirection, changeSort} = this.props
+    changeSort('author', orderDirection === 'desc' ? 'asc' : 'desc')
+  }
+
+  handleSearch = (e) => {
+    const {searchBooks} = this.props
+
+    searchBooks && searchBooks(e.target.value)
   }
 }
 
-export default Filters
+export default connect(
+  (state) => ({
+    search: searchSelector(state),
+    orderDirection: orderDirectionSelector(state),
+    orderBy: orderBySelector(state),
+  }),
+  {searchBooks, changeSort}
+)(Filters)
