@@ -24,7 +24,7 @@ class BookEditPage extends Component {
     const {book, loading} = this.props
 
     if (!book) {
-      const message = 'Книга не найдена';
+      const message = 'The book not found';
       return <NotFound message={message}/>
     }
 

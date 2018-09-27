@@ -3,7 +3,7 @@ import {Record, OrderedMap} from 'immutable'
 import {createSelector} from 'reselect'
 import api from "../redux/api";
 import {setSubmitSucceeded, stopSubmit, startSubmit} from 'redux-form'
-import {getBase64} from "./utils";
+import {getBase64} from "../utils";
 
 /**
  * Constants

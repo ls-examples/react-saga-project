@@ -6,7 +6,7 @@ class ImageUpload extends Component {
   render() {
     return (
       <FormGroup row>
-        <Label sm={2} for="image">Изображение</Label>
+        <Label sm={2} for="image">Image</Label>
         <Col sm={10}>
           <Input accept="image/*" onChange={this.handleChange} type="file" name="image"/>
         </Col>

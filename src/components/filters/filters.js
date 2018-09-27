@@ -30,7 +30,7 @@ class Filters extends Component {
                    name="search"
                    defaultValue={search}
                    onChange={this.handleSearch}
-                   placeholder="Поиск"/>
+                   placeholder="Search"/>
           </FormGroup>
           <div>
             <a href="" onClick={this.handleSortTitle}>

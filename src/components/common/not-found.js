@@ -9,7 +9,7 @@ class NotFound extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      message: this.props.message ? this.props.message : 'К сожалению страница не найдена'
+      message: this.props.message ? this.props.message : 'Page not found'
     }
   }
 

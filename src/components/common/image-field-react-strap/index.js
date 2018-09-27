@@ -25,7 +25,7 @@ export class ImageDropzoneFieldReactStrap extends Component {
             }}
             accept='image/*'>
             <div>
-              <div className="mt-2 ml-2">Загрузить изображение</div>
+              <div className="mt-2 ml-2">Download image</div>
               <Alert className="m-2" isOpen={!!imageUploadError} color="danger">
                 {imageUploadError}
               </Alert>

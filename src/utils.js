@@ -1,9 +1,5 @@
 import { OrderedMap } from 'immutable'
 
-export function generateId() {
-  return Date.now() + Math.random()
-}
-
 export function responseItemsToEntities(values, DataRecord) {
   return Object.entries(values).reduce(
     (acc, [id, item]) => acc.set(item.id, new DataRecord({...item})),

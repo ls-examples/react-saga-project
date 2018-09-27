@@ -1,7 +1,7 @@
 import {all, takeEvery, put, call, select, takeLatest} from 'redux-saga/effects'
 import {Record, OrderedMap} from 'immutable'
 import {createSelector} from 'reselect'
-import {responseItemsToEntities} from './utils'
+import {responseItemsToEntities} from '../utils'
 import api from "../redux/api";
 
 /**

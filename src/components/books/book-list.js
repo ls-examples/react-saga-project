@@ -67,7 +67,7 @@ class BookList extends Component {
     return (
       <Button
         onClick={this.props.loadBooks}
-        className="mt-3" color="secondary">Показать ещё</Button>
+        className="mt-3" color="secondary">Show more</Button>
     )
   }
 }

@@ -27,17 +27,17 @@ class BookCard extends Component {
         <CardHeader><CardTitle>{title}</CardTitle></CardHeader>
         <CardBody>
           <CardText tag="div">
-            <div>Автор: {author}</div>
-            <div>Год издания : {year}</div>
+            <div>Author: {author}</div>
+            <div>Year : {year}</div>
             <div>{description}</div>
             {image ? <div><img alt="" height={300} src={image.url}/></div> : ''}
           </CardText>
         </CardBody>
         <CardFooter>
           <NavLink to={`/book/edit/${id}`}>
-            <Button color="primary">Редактировать</Button>
+            <Button color="primary">Edit</Button>
           </NavLink>
-          <Button className="ml-2" color="danger" onClick={this.props.handleDeleteBook}>Удалить</Button>
+          <Button className="ml-2" color="danger" onClick={this.props.handleDeleteBook}>Delete</Button>
         </CardFooter>
       </Card>
     );

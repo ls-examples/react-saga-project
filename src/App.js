@@ -17,12 +17,12 @@ class App extends Component {
           <Col sm={12} className="mb-3 mt-2">
             <div className="float-left">
               <NavLink to="/">
-                Каталог книг
+                Books
               </NavLink>
             </div>
             <div className="float-right">
               <NavLink to="/book/create" activeStyle={{color: 'red'}}>
-                <Button outline size="sm" color="secondary">Добавить</Button>
+                <Button outline size="sm" color="secondary">Add book</Button>
               </NavLink>
             </div>
           </Col>

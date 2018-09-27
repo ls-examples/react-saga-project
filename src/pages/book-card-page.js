@@ -29,7 +29,7 @@ class BookCardPage extends Component {
       return <div>Книга удалена</div>
     }
     if (!book) {
-      const message = 'Книга  не найдена';
+      const message = 'The book not found';
       return <NotFound message={message}/>
     }
 
