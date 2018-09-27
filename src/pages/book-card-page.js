@@ -26,7 +26,7 @@ class BookCardPage extends Component {
   render() {
     const {book, loading, isDeleted} = this.props
     if (isDeleted) {
-      return <div>Книга удалена</div>
+      return <div>Book is deleted</div>
     }
     if (!book) {
       const message = 'The book not found';

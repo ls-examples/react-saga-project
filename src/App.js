@@ -8,11 +8,13 @@ import {Row, Col, Button} from "reactstrap";
 import NotFound from "./components/common/not-found";
 import BookEditPage from "./pages/book-edit-page";
 import BookAddPage from "./pages/book-add-page";
+import SourceLinks from "./components/source-links";
 
 class App extends Component {
   render() {
     return (
       <div className="m-5">
+        <SourceLinks/>
         <Row>
           <Col sm={12} className="mb-3 mt-2">
             <div className="float-left">

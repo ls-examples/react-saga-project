@@ -34,13 +34,13 @@ class Filters extends Component {
           </FormGroup>
           <div>
             <a href="" onClick={this.handleSortTitle}>
-              Название
+              Title
               {'title' === orderBy ?
                 <FontAwesomeIcon icon={orderDirection === 'desc' ? faSortAmountDown : faSortAmountUp}/> : ''}
             </a>
             {' '}
             <a href="" onClick={this.handleSortAuthor}>
-              Автор
+              Author
               {'author' === orderBy ?
                 <FontAwesomeIcon icon={orderDirection === 'desc' ? faSortAmountDown : faSortAmountUp}/> : ''}
             </a>

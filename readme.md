@@ -1,4 +1,4 @@
 
-- [Demo](https://books.prod3.dsxack.com/)
-- [API documentation](https://booksapi.prod3.dsxack.com/api/documentation)
-- [API Repository](https://github.com/ls-examples/laravel-api)
+- [Demo](https://books.examples.lilit-web.ru/)
+- [API documentation](https://booksapi.examples.lilit-web.ru/api/documentation)
+- [API GIT Repository](https://github.com/ls-examples/laravel-api)
